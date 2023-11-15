@@ -12,20 +12,22 @@ Notify.init({
   cssAnimationStyle: 'zoom',
 });
 
-export const ContactListItem = ({ name, phone, id }) => {
+export const ContactListItem = ({ name, number, contactId }) => {
   const dispatch = useDispatch();
 
   const onRemoveContact = () => {
-    dispatch(deleteContact(id))
+    dispatch(deleteContact(contactId))
       .unwrap()
       .then(() => Notify.success('The contact has been successfully removed'))
       .catch(error => error.message);
   };
 
   return (
-    <ListItem key={id}>
-      {name}: {phone}
-      <BtnDeleteItem onClick={() => onRemoveContact(id)}>Remove</BtnDeleteItem>
+    <ListItem key={contactId}>
+      {name}: {number}
+      <BtnDeleteItem onClick={() => onRemoveContact(contactId)}>
+        Remove
+      </BtnDeleteItem>
     </ListItem>
   );
 };

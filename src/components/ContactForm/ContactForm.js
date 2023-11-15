@@ -27,7 +27,7 @@ const Schema = yup.object().shape({
       /^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$/,
       'Enter valid symbols'
     ),
-  phone: yup
+  number: yup
     .string()
     .required('Required')
     .min(6, 'Number must be 6-13 characters long')
@@ -44,12 +44,12 @@ export const ContactForm = () => {
   return (
     <Formik
       initialValues={{
-        phone: '',
+        number: '',
         name: '',
       }}
       validationSchema={Schema}
       onSubmit={(values, actions) => {
-        const { name, phone } = values;
+        const { name, number } = values;
         if (
           contacts.some(
             contact => contact.name.toLowerCase() === name.toLowerCase()
@@ -60,7 +60,7 @@ export const ContactForm = () => {
 
         const contact = {
           name,
-          phone,
+          number,
         };
         dispatch(addContact(contact))
           .unwrap()
@@ -82,8 +82,8 @@ export const ContactForm = () => {
         </Label>
         <Label>
           Number
-          <Input type="tel" name="phone" placeholder="Enter number..." />
-          <ErrorMsg component="div" name="phone" />
+          <Input type="tel" name="number" placeholder="Enter number..." />
+          <ErrorMsg component="div" name="number" />
         </Label>
         <BtnAddContact type="submit">Add contact</BtnAddContact>
       </Form>
