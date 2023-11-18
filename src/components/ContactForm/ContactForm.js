@@ -3,8 +3,7 @@ import { Notify } from 'notiflix/build/notiflix-notify-aio';
 
 import * as yup from 'yup';
 import { Formik, Form } from 'formik';
-import { Label } from './ContactForm.styled';
-import { Input, BtnAddContact, ErrorMsg } from './ContactForm.styled';
+import { Label, Input, BtnAddContact, ErrorMsg } from './ContactForm.styled';
 import { selectContacts } from '../../../src/redux/selectors';
 import { addContact } from '../../../src/redux/operations';
 

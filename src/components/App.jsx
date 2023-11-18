@@ -1,66 +1,57 @@
-import { Notify } from 'notiflix/build/notiflix-notify-aio';
-import { GiRotaryPhone } from 'react-icons/gi';
 import { useSelector, useDispatch } from 'react-redux';
-import { useEffect } from 'react';
+import { useEffect, lazy } from 'react';
+import { Route, Routes } from 'react-router-dom';
 
-import { ContactForm } from '../components/ContactForm/ContactForm';
-import { Filter } from '../components/Filter/Filter';
-import { ContactList } from '../components/ContactList/ContactList';
-import {
-  selectContacts,
-  selectError,
-  selectIsLoading,
-} from '../../src/redux/selectors';
-import { fetchContacts } from '../../src/redux/operations';
+import { selectIsRefreshing } from '../../src/redux/auth/selectors';
+import { Layout } from '../../src/components/Layout';
+import { RestrictedRoute } from '../../src/components/RestrictedRoute';
+import { PrivateRoute } from './PrivateRoute';
+import { refreshUser } from 'redux/auth/operations';
 
-import {
-  Container,
-  FormContainer,
-  StatisticsContainer,
-  ContactsHeading,
-  MainHeading,
-  NoContactsText,
-} from './Container.styled';
-
-Notify.init({
-  borderRadius: '11px',
-  position: 'top-right',
-  width: '400px',
-  timeout: 4000,
-  clickToClose: true,
-  cssAnimationStyle: 'zoom',
-});
+const RegisterPage = lazy(() => import('../../src/pages/Register'));
+const LoginPage = lazy(() => import('../../src/pages/Login'));
+const ContactsPage = lazy(() => import('../../src/pages/Contacts'));
 
 export const App = () => {
-  const contacts = useSelector(selectContacts);
   const dispatch = useDispatch();
-  const isLoading = useSelector(selectIsLoading);
-  const error = useSelector(selectError);
+  const isRefreshing = useSelector(selectIsRefreshing);
 
   useEffect(() => {
-    dispatch(fetchContacts());
+    dispatch(refreshUser());
   }, [dispatch]);
 
-  return (
-    <Container>
-      <FormContainer>
-        <MainHeading>
-          Phonebook <GiRotaryPhone />
-        </MainHeading>
-        <ContactForm />
-      </FormContainer>
-      <StatisticsContainer>
-        <ContactsHeading>Contacts</ContactsHeading>
-        <Filter />
-        {isLoading && !error && <b>Request in progress...</b>}
-        {contacts?.length ? (
-          <ContactList />
-        ) : (
-          <NoContactsText>
-            There are no contacts in your phoneboook
-          </NoContactsText>
-        )}
-      </StatisticsContainer>
-    </Container>
+  return isRefreshing ? (
+    <b>Refreshing user...</b>
+  ) : (
+    <Routes>
+      <Route path="/" element={<Layout />}>
+        {/* <Route index element={<HomePage />} /> */}
+        <Route
+          path="register"
+          element={
+            <RestrictedRoute
+              redirectTo="../contacts"
+              component={<RegisterPage />}
+            />
+          }
+        />
+        <Route
+          path="login"
+          element={
+            <RestrictedRoute
+              redirectTo="../contacts"
+              component={<LoginPage />}
+            />
+          }
+        />
+        <Route
+          path="contacts"
+          element={
+            <PrivateRoute redirectTo="../login" component={<ContactsPage />} />
+          }
+        />
+        <Route path="*" element={<div>NotFound</div>} />
+      </Route>
+    </Routes>
   );
 };
