@@ -15,6 +15,7 @@ const theme = {
     backgroundColor: 'rgb(107, 107, 239)',
     containerColor: 'rgb(64, 64, 239)',
     error: 'red',
+    form: 'white',
   },
 };
 
