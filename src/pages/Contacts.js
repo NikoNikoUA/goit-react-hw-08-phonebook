@@ -2,13 +2,13 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 // import { Helmet } from 'react-helmet';
 import { GiRotaryPhone } from 'react-icons/gi';
-import { fetchContacts } from '../../src/redux/operations';
-import { selectIsLoading } from '../../src/redux/selectors';
+import { fetchContacts } from '../redux/contacts/operations';
+import { selectIsLoading } from '../redux/contacts/selectors';
 import { ContactForm } from '../../src/components/ContactForm/ContactForm';
 import { ContactList } from '../../src/components/ContactList/ContactList';
-import { selectContacts } from '../../src/redux/selectors';
+import { selectContacts } from '../redux/contacts/selectors';
 import { Filter } from '../components/Filter/Filter';
-import { selectError } from '../../src/redux/selectors';
+import { selectError } from '../redux/contacts/selectors';
 import {
   Container,
   FormContainer,

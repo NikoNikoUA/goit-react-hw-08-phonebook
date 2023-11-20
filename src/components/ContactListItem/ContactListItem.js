@@ -1,7 +1,7 @@
 import { BtnDeleteItem, ListItem } from './ContactListItem.styled';
 import { useDispatch } from 'react-redux';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
-import { deleteContact } from '../../../src/redux/operations';
+import { deleteContact } from '../../redux/contacts/operations';
 
 Notify.init({
   borderRadius: '11px',

@@ -4,8 +4,8 @@ import { Notify } from 'notiflix/build/notiflix-notify-aio';
 import * as yup from 'yup';
 import { Formik, Form } from 'formik';
 import { Label, Input, BtnAddContact, ErrorMsg } from './ContactForm.styled';
-import { selectContacts } from '../../../src/redux/selectors';
-import { addContact } from '../../../src/redux/operations';
+import { selectContacts } from '../../redux/contacts/selectors';
+import { addContact } from '../../redux/contacts/operations';
 
 Notify.init({
   borderRadius: '11px',
